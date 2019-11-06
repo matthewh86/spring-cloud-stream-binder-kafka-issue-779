@@ -1,0 +1,50 @@
+plugins {
+	id 'org.springframework.boot' version '2.2.0.RELEASE'
+	id 'io.spring.dependency-management' version '1.0.8.RELEASE'
+	id 'java'
+}
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+repositories {
+	mavenCentral()
+	maven { url 'https://repo.spring.io/milestone' }
+}
+
+ext {
+	set('springCloudVersion', "Hoxton.RC1")
+	lombokVersion = "1.18.8"
+}
+
+dependencies {
+	implementation 'org.apache.kafka:kafka-streams'
+
+	implementation("org.springframework.boot:spring-boot-starter-web")
+	implementation 'org.springframework.cloud:spring-cloud-stream'
+	implementation 'org.springframework.cloud:spring-cloud-stream-binder-kafka'
+	implementation("org.springframework.boot:spring-boot-starter-actuator")
+
+	annotationProcessor("org.projectlombok:lombok:${lombokVersion}")
+	compileOnly("org.projectlombok:lombok:${lombokVersion}")
+
+	testImplementation('org.springframework.boot:spring-boot-starter-test') {
+		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+	}
+
+	testImplementation("org.springframework.boot:spring-boot-starter-test")
+	testImplementation 'org.springframework.cloud:spring-cloud-stream-test-support'
+	testImplementation("io.rest-assured:rest-assured:4.0.0")
+	testImplementation("io.rest-assured:json-path:4.0.0")
+}
+
+dependencyManagement {
+	imports {
+		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+	}
+}
+
+test {
+	useJUnitPlatform()
+}

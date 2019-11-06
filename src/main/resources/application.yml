@@ -1,0 +1,24 @@
+info:
+  app:
+    id: EA
+    name: ${PROJECT_NAME:example-application}
+    version: ${PROJECT_VERSION:0.0.1-SNAPSHOT}
+    description: Example application
+
+spring:
+  cloud:
+    stream:
+      kafka:
+        streams:
+          binder:
+            brokers: ${KAFKA_BROKERS:localhost:9092}
+
+management:
+  endpoint:
+    health:
+      show-details: always
+  server:
+    port: 8081
+  endpoints:
+    web:
+      base-path: /gb/example-application/actuator
